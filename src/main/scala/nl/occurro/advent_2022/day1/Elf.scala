@@ -1,7 +1,6 @@
-package nl.occurro.advent2022
+package nl.occurro.advent_2022.day1
 
 case class Elf(position: Int, food: List[Int]) {
-  def totalFood() = {
+  def totalFood() =
     this.food.sum
-  }
 }

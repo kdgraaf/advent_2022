@@ -1,4 +1,4 @@
-package nl.occurro.advent2022
+package nl.occurro.advent_2022.day1
 
 import Elf._
 
