@@ -3,14 +3,17 @@ package nl.occurro.advent_2022.day2
 import Choices._
 
 
-def readFile(filename: String): List[Move] = {
+def readFile(filename: String, version: String): List[Move] = {
 
   val bufferedSource = io.Source.fromFile(filename)
   val lines = (for (line <- bufferedSource.getLines())
     yield line.split(" ") match { case Array(i, j) => (i, j) }).toList
 
   bufferedSource.close
-  lines.map((x, y) => Move(x, y))
+  lines.map((x, y) => version match {
+    case "a" => Move.applyA(x, y)
+    case "b" => Move.applyB(x, y, version)
+  })
 }
 
 def determineScore(move: Move): Int = {
@@ -43,6 +46,9 @@ def determineScore(move: Move): Int = {
 
 object Advent02 extends App {
 
-  val moves = readFile("./src/main/resources/input02.txt")
+  val moves = readFile("./src/main/resources/input02.txt", "a")
   println(s"Total score: ${moves.foldLeft(0)((a, i) => a + determineScore(i))}")
+
+  val moves2 = readFile("./src/main/resources/input02.txt", "b")
+  println(s"Total score: ${moves2.foldLeft(0)((a, i) => a + determineScore(i))}")
 }
