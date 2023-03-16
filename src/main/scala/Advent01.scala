@@ -6,10 +6,7 @@ def readFile(filename: String): List[Elf] = {
 
   def splitBy[A](sep: A, seq: List[A]): List[List[A]] = {
     @annotation.tailrec
-    def rec(
-             xs: List[A],
-             revAcc: List[List[A]]
-           ): List[List[A]] =
+    def rec(xs: List[A], revAcc: List[List[A]]): List[List[A]] =
       xs match {
         case Nil => revAcc.reverse
         case h :: t =>
@@ -31,17 +28,22 @@ def readFile(filename: String): List[Elf] = {
   bufferedSource.close
 
   val lists = splitBy("", lines)
-  
+
   lists.zipWithIndex.map {
-    case (list, index) => Elf(index, list.map(s => s.toInt))
+    case (list, index) => Elf(index + 1, list.map(s => s.toInt))
   }
 }
 
 object Advent01 extends App {
 
-  val elfs = readFile("./src/main/resources/input01.txt")
-  elfs.foreach((elf) => println(s"elf: ${elf.position}, ${elf.food}"))
+  val elfs: Seq[Elf] = readFile("./src/main/resources/input01.txt")
 
-  println(s"Maximum food carried: ${elfs.map(e => e.totalFood()).max}")
+  val foodCarried: Seq[(Int, Int)] = elfs.map(e => (e.position, e.totalFood()))
+  val foodCarriedSorted = foodCarried.sortBy(e => - e._2)
+
+  println(s"1a: Max food carried: ${foodCarriedSorted.take(1).head._2}")
+  println(s"2a: Top3 food carried: ${foodCarriedSorted.take(3).map(e => e._2).sum}")
 
 }
+
+
