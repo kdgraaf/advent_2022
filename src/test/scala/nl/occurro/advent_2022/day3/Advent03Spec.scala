@@ -5,12 +5,24 @@ import org.scalatest.wordspec.AnyWordSpec
 
 class Advent03Spec extends AnyWordSpec with Matchers {
 
-  "Read a file, and calculate prio" in {
+  "Read a file, and calculate prio 3a" in {
     val rucksacks = readFile("./src/test/resources/input03Test.txt")
     val expected  = 157
 
-    val r      = rucksacks.map(commonChar(_))
-    val result = r.map(priority(_)).sum
+    val rsSplitted = rucksacks.map(splitString(_))
+    val rsCommon   = rsSplitted.map(commonCharacters(_))
+    val result     = rsCommon.map(s => priority(s.charAt(0))).sum
+
+    result shouldBe expected
+  }
+
+  "Read a file, and calculate prio 3b" in {
+    val rucksacks = readFile("./src/test/resources/input03Test.txt")
+    val expected  = 70
+
+    val rsGrouped       = rucksacks.grouped(3).toList
+    val rsGroupedCommon = rsGrouped.map(commonCharacters(_))
+    val result          = rsGroupedCommon.map(s => priority(s.charAt(0))).sum
 
     result shouldBe expected
   }
