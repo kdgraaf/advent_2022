@@ -5,6 +5,33 @@ import org.scalatest.wordspec.AnyWordSpec
 
 class Advent03Spec extends AnyWordSpec with Matchers {
 
+  "splitString should a split a string in two parts" in {
+    
+    // The first rucksack contains the items vJrwpWtwJgWrhcsFMMfFFhFp, which means its first compartment contains the items vJrwpWtwJgWr, 
+    // while the second compartment contains the items hcsFMMfFFhFp.
+
+    val s = "vJrwpWtwJgWrhcsFMMfFFhFp"
+    val expected = List("vJrwpWtwJgWr","hcsFMMfFFhFp")
+
+    splitString(s) shouldBe expected
+
+  }
+
+  "commonCharacters should select the characters that appear in all strings" in {
+    val l = List("vJrwpWtwJgWrhcsFMMfFFhFp","jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL","PmmdzqPrVvPwwTWBwg")
+    val expected = "r"
+
+    commonCharacters(l) shouldBe expected
+  }
+
+  "priority should calculate the correct priority" in {
+    val c = 'r'
+    val expected = 18
+
+    priority(c) shouldBe expected
+  }
+
+
   "Read a file, and calculate prio 3a" in {
     val rucksacks = readFile("./src/test/resources/input03Test.txt")
     val expected  = 157
